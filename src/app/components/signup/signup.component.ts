@@ -49,10 +49,10 @@ export class SignupComponent {
         this.loading = false;
         if (res.success) {
           this.success = true;
+          // ایمیل در بک‌اند به‌صورت پیش‌فرض تأیید شده در نظر گرفته می‌شود،
+          // بنابراین بعد از ثبت‌نام مستقیم به صفحهٔ لاگین می‌رویم.
           setTimeout(() => {
-            this.router.navigate(['/verify-email'], {
-              queryParams: { email: this.form.get('email')?.value },
-            });
+            this.router.navigate(['/login']);
           }, 1500);
         } else {
           this.error = res.error || 'Registration failed';

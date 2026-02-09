@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-verify-email',
@@ -18,8 +17,7 @@ export class VerifyEmailComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
-    private auth: AuthService
+    private router: Router
   ) {
     this.form = this.fb.group({
       code: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
@@ -32,25 +30,16 @@ export class VerifyEmailComponent implements OnInit {
 
   onSubmit(): void {
     this.error = '';
-    if (!this.email || this.form.invalid) {
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
-      if (!this.email) this.error = 'Email is required';
       return;
     }
+    // در نسخهٔ جدید، ایمیل در بک‌اند هم‌زمان با ثبت‌نام تأیید می‌شود،
+    // بنابراین این صفحه فقط جنبهٔ نمایشی دارد و کاربر را به صفحهٔ لاگین می‌برد.
     this.loading = true;
-    this.auth.verifyEmail({ email: this.email, code: this.form.get('code')?.value }).subscribe({
-      next: (res) => {
-        this.loading = false;
-        if (res.success) {
-          this.router.navigate(['/dashboard']);
-        } else {
-          this.error = res.error || 'Verification failed';
-        }
-      },
-      error: () => {
-        this.loading = false;
-        this.error = 'Connection error';
-      },
-    });
+    setTimeout(() => {
+      this.loading = false;
+      this.router.navigate(['/login']);
+    }, 500);
   }
 }

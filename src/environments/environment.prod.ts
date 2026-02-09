@@ -7,5 +7,8 @@ import type { Environment } from './environment.interface';
  */
 export const environment: Environment = {
   production: true,
+  // در محیط واقعی حتماً از HTTPS استفاده کن، مثلاً:
+  // apiBaseUrl: 'https://api.your-domain.com/api',
+  // اگر فرانت و بک روی یک دامنه هستند، می‌توانی '/api' بگذاری و SSL را روی وب‌سرور (Nginx/Apache) فعال کنی.
   apiBaseUrl: '/api',
 };
