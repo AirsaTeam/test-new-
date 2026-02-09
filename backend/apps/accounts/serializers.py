@@ -46,6 +46,8 @@ class UserSerializer(serializers.ModelSerializer):
         return profile.display_name or obj.get_username()
 
     def get_role(self, obj):
+        if getattr(obj, 'is_staff', False):
+            return 'admin'
         profile = self.get_profile(obj)
         return profile.role
 

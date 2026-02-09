@@ -25,7 +25,7 @@ export class AdminCargoComponent implements OnInit {
     this.storedBookings = this.userBookings.getStoredBookingsForAdmin();
     this.auth.listUsers().subscribe((users) => {
       const map: Record<string, string> = {};
-      users.forEach((u) => (map[u.id] = u.displayName || u.username || u.email));
+      users.forEach((u) => (map[String(u.id)] = u.displayName || u.username || u.email));
       this.userNames = map;
     });
   }

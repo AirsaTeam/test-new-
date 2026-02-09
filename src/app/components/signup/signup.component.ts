@@ -14,6 +14,8 @@ export class SignupComponent {
   error = '';
   loading = false;
   success = false;
+  hidePassword = true;
+  hideConfirmPassword = true;
 
   constructor(
     private fb: FormBuilder,

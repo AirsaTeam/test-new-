@@ -1,9 +1,9 @@
 export interface User {
-  id: string;
+  id: string | number;
   email: string;
   username: string;
   displayName: string;
-  passwordHash: string;
+  passwordHash?: string;
   avatarUrl?: string;
   role: 'admin' | 'user';
   emailVerified: boolean;

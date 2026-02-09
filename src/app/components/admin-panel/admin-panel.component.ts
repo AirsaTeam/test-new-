@@ -39,7 +39,7 @@ export class AdminPanelComponent implements OnInit {
   }
 
   startEdit(u: User): void {
-    this.editingId = u.id;
+    this.editingId = u.id != null ? String(u.id) : null;
     this.editForm = {
       displayName: u.displayName,
       username: u.username,
@@ -56,7 +56,7 @@ export class AdminPanelComponent implements OnInit {
   }
 
   saveEdit(): void {
-    if (!this.editingId) return;
+    if (this.editingId == null) return;
     this.error = '';
     this.auth.updateUser(this.editingId, {
       displayName: this.editForm.displayName,
@@ -82,7 +82,7 @@ export class AdminPanelComponent implements OnInit {
       next: (res) => {
         if (res.success) {
           this.loadUsers();
-          if (this.editingId === u.id) this.cancelEdit();
+          if (this.editingId != null && String(this.editingId) === String(u.id)) this.cancelEdit();
         } else {
           this.error = res.error || 'Delete failed';
         }

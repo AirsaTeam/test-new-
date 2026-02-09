@@ -37,10 +37,11 @@ export class UserBookingsService {
     return this.list$;
   }
 
-  refresh(userId: string | undefined): void {
+  refresh(userId: string | number | undefined): void {
     const all = loadAll();
-    const forUser = userId
-      ? all.filter((x) => x.userId === userId).map((x) => x.booking)
+    const idStr = userId != null ? String(userId) : undefined;
+    const forUser = idStr
+      ? all.filter((x) => x.userId === idStr).map((x) => x.booking)
       : [];
     forUser.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     this.list$.next(forUser);
@@ -50,7 +51,7 @@ export class UserBookingsService {
     const user = this.auth.getCurrentUserValue();
     if (!user) return;
     const all = loadAll();
-    all.unshift({ userId: user.id, booking });
+    all.unshift({ userId: String(user.id), booking });
     saveAll(all);
     this.refresh(user.id);
   }

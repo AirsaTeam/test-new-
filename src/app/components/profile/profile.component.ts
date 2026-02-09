@@ -53,7 +53,7 @@ export class ProfileComponent implements OnInit {
       avatarUrl: this.form.get('avatarUrl')?.value || undefined,
     };
     if (newPwd) req.password = newPwd;
-    this.auth.updateUser(user.id, req).subscribe({
+    this.auth.updateUser(String(user.id), req).subscribe({
       next: (res) => {
         this.loading = false;
         if (res.success) {

@@ -82,6 +82,26 @@ export class AuthService {
     return localStorage.getItem(STORAGE_ACCESS);
   }
 
+  /**
+   * اگر توکن داریم ولی کاربر در session نیست (مثلاً بعد از رفرش)،
+   * از بک /me می‌گیریم و کاربر را ذخیره می‌کنیم تا گاردها و نقش درست کار کنند.
+   */
+  restoreUser(): Observable<User | null> {
+    const token = this.getAccessToken();
+    if (!token) return of(null);
+    return this.http.get<User>(`${this.apiUrl}/me/`).pipe(
+      map((user) => ({ ...user, role: this.normalizeRole(user.role) as 'admin' | 'user' })),
+      tap((user) => this.setStoredUser(user)),
+      catchError(() => of(null))
+    );
+  }
+
+  /** نقش را برای مقایسه یکدست می‌کند (بک ممکن است با حروف مختلف برگرداند). */
+  private normalizeRole(role: unknown): string {
+    if (typeof role !== 'string') return 'user';
+    return role.toLowerCase();
+  }
+
   // ---------- تماس با بک‌اند ----------
 
   register(req: CreateUserRequest): Observable<{ success: boolean; error?: string }> {
@@ -111,9 +131,13 @@ export class AuthService {
     }).pipe(
       tap((res) => {
         this.setTokens(res.access, res.refresh);
-        this.setStoredUser(res.user);
+        const user = { ...res.user, role: this.normalizeRole(res.user.role) as 'admin' | 'user' };
+        this.setStoredUser(user);
       }),
-      map((res) => ({ success: true, user: res.user })),
+      map((res) => {
+        const user = { ...res.user, role: this.normalizeRole(res.user.role) as 'admin' | 'user' };
+        return { success: true, user };
+      }),
       catchError((err) => {
         const msg = err?.error?.detail || 'Invalid username or password';
         return of({ success: false, error: msg });
@@ -130,13 +154,15 @@ export class AuthService {
     return this.http.get<User[]>(`${this.apiUrl}/users/`);
   }
 
-  updateUser(id: string, req: UpdateUserRequest): Observable<{ success: boolean; user?: User; error?: string }> {
-    return this.http.patch<User>(`${this.apiUrl}/users/${id}/`, {
+  updateUser(id: string | number, req: UpdateUserRequest): Observable<{ success: boolean; user?: User; error?: string }> {
+    const idStr = String(id);
+    return this.http.patch<User>(`${this.apiUrl}/users/${idStr}/`, {
       displayName: req.displayName,
       username: req.username,
     }).pipe(
       tap((user) => {
-        if (this.currentUser$.value?.id === user.id) {
+        const currentId = this.currentUser$.value?.id;
+        if (currentId != null && String(currentId) === String(user.id)) {
           this.setStoredUser(user);
         }
       }),
@@ -148,10 +174,12 @@ export class AuthService {
     );
   }
 
-  deleteUser(id: string): Observable<{ success: boolean; error?: string }> {
-    return this.http.delete(`${this.apiUrl}/users/${id}/`).pipe(
+  deleteUser(id: string | number): Observable<{ success: boolean; error?: string }> {
+    const idStr = String(id);
+    return this.http.delete(`${this.apiUrl}/users/${idStr}/`).pipe(
       tap(() => {
-        if (this.currentUser$.value?.id === id) {
+        const currentId = this.currentUser$.value?.id;
+        if (currentId != null && String(currentId) === idStr) {
           this.logout();
         }
       }),
