@@ -1,0 +1,107 @@
+.admin-panel {
+  max-width: 100%;
+  padding: 0 0.5rem;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.admin-title {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #f1f5f9;
+}
+
+.error-msg {
+  margin: 0 0 0.75rem;
+  color: #f87171;
+  font-size: 0.9rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  background: rgba(30, 41, 59, 0.9);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(71, 85, 105, 0.6);
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.users-table th,
+.users-table td {
+  padding: 0.65rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(71, 85, 105, 0.4);
+}
+
+.users-table th {
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.users-table td {
+  color: #e2e8f0;
+}
+
+.users-table tr.editing td {
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.input-cell {
+  width: 100%;
+  min-width: 100px;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid rgba(71, 85, 105, 0.8);
+  border-radius: 0.35rem;
+  background: rgba(15, 23, 42, 0.6);
+  color: #f1f5f9;
+  font-size: 0.9rem;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.35rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-right: 0.35rem;
+}
+
+.btn-sm {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.8rem;
+}
+
+.btn-secondary {
+  background: rgba(71, 85, 105, 0.6);
+  color: #e2e8f0;
+}
+
+.btn-primary {
+  background: #0d9488;
+  color: #fff;
+}
+
+.btn-danger {
+  background: rgba(248, 113, 113, 0.25);
+  color: #f87171;
+}
+
+.btn-danger:hover {
+  background: rgba(248, 113, 113, 0.4);
+}
+
+.loading, .empty {
+  color: #94a3b8;
+  margin: 1rem 0;
+}

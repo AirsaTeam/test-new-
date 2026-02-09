@@ -1,0 +1,80 @@
+<div class="admin-reports">
+  <header class="section-header">
+    <h2 class="section-title">Reports</h2>
+    <button type="button" class="btn btn-secondary" (click)="back()">Back to admin panel</button>
+  </header>
+
+  <div class="date-range">
+    <div class="field">
+      <label for="dateFrom">From date</label>
+      <input id="dateFrom" type="date" [(ngModel)]="dateFrom" />
+    </div>
+    <div class="field">
+      <label for="dateTo">To date</label>
+      <input id="dateTo" type="date" [(ngModel)]="dateTo" />
+    </div>
+    <button type="button" class="btn btn-primary" (click)="generate()">Apply and show report</button>
+  </div>
+
+  <div *ngIf="stats" class="report-result">
+    <h3 class="report-title">Summary for selected period</h3>
+
+    <div class="stats-table-wrap">
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Number of trips submitted</td>
+            <td>{{ stats.bookingCount }}</td>
+          </tr>
+          <tr>
+            <td>Items moved (passenger + baggage + vehicle)</td>
+            <td>{{ stats.totalItems }}</td>
+          </tr>
+          <tr>
+            <td>Total cargo weight (kg)</td>
+            <td>{{ stats.totalWeightKg }}</td>
+          </tr>
+          <tr>
+            <td>Passengers moved</td>
+            <td>{{ stats.totalPassengers }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="charts">
+      <h4 class="chart-title">Comparison chart</h4>
+      <div class="bar-chart">
+        <div class="bar-row">
+          <span class="bar-label">Items moved</span>
+          <div class="bar-track">
+            <div class="bar-fill" [style.width.%]="(stats.totalItems / maxBar) * 100"></div>
+          </div>
+          <span class="bar-value">{{ stats.totalItems }}</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Cargo weight (kg)</span>
+          <div class="bar-track">
+            <div class="bar-fill weight" [style.width.%]="(stats.totalWeightKg / maxBar) * 100"></div>
+          </div>
+          <span class="bar-value">{{ stats.totalWeightKg }}</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Passengers</span>
+          <div class="bar-track">
+            <div class="bar-fill passengers" [style.width.%]="(stats.totalPassengers / maxBar) * 100"></div>
+          </div>
+          <span class="bar-value">{{ stats.totalPassengers }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p *ngIf="!stats" class="hint">Select a date range and click «Apply and show report».</p>
+</div>

@@ -1,0 +1,23 @@
+<div class="dashboard-shell">
+  <header class="dashboard-header">
+    <div class="header-brand">
+      <img src="/logo-shinas.png" alt="Shinas Port" class="header-logo" />
+      <span class="company-name">Shinas Port</span>
+    </div>
+    <nav class="nav-links">
+      <a routerLink="/dashboard/profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }">Profile</a>
+      <a routerLink="/dashboard/registration" routerLinkActive="active">Registration</a>
+      <a routerLink="/dashboard/cargo-list" routerLinkActive="active">Cargo list</a>
+      <ng-container *ngIf="user$ | async as u">
+        <a *ngIf="u.role === 'admin'" routerLink="/admin" class="admin-link">Admin</a>
+      </ng-container>
+    </nav>
+    <div class="user-bar" *ngIf="user$ | async as u">
+      <span class="user-name">{{ u.displayName || u.username }}</span>
+      <button type="button" class="btn-logout" (click)="logout()">Logout</button>
+    </div>
+  </header>
+  <main class="dashboard-main">
+    <router-outlet></router-outlet>
+  </main>
+</div>

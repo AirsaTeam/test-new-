@@ -1,0 +1,203 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Registration Form</h2>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="card-body">
+    <div class="grid-2">
+      <div class="field-group">
+        <label class="label">Cargo type</label>
+        <div class="toggle-row">
+          <label class="toggle">
+            <input type="checkbox" formControlName="hasPassenger" />
+            <span>Passenger</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" formControlName="hasBaggage" />
+            <span>Baggage</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" formControlName="hasVehicle" />
+            <span>Vehicle</span>
+          </label>
+        </div>
+        <small class="hint">
+          You can select any combination (e.g. passenger + baggage).
+        </small>
+      </div>
+
+      <div class="field-group">
+        <label class="label">Route</label>
+        <div class="grid-2">
+          <div>
+            <span class="field-label">Origin port</span>
+            <input
+              class="input"
+              type="text"
+              placeholder="e.g. DOHA"
+              formControlName="originPort"
+            />
+          </div>
+          <div>
+            <span class="field-label">Destination port</span>
+            <input
+              class="input"
+              type="text"
+              placeholder="e.g. DUBAI"
+              formControlName="destinationPort"
+            />
+          </div>
+        </div>
+        <div class="mt-8">
+          <span class="field-label">Departure date &amp; time</span>
+          <input class="input" type="datetime-local" formControlName="departureDate" />
+        </div>
+      </div>
+    </div>
+
+    <div class="section" *ngIf="hasPassenger">
+      <h3>Passenger details</h3>
+      <div class="grid-3">
+        <div>
+          <span class="field-label">Full name</span>
+          <input
+            class="input"
+            type="text"
+            placeholder="Passenger name"
+            formControlName="passengerName"
+          />
+        </div>
+        <div>
+          <span class="field-label">ID / Passport no.</span>
+          <input
+            class="input"
+            type="text"
+            placeholder="Document number"
+            formControlName="passengerIdNumber"
+          />
+        </div>
+        <div>
+          <span class="field-label">Mobile (for SMS)</span>
+          <input
+            class="input"
+            type="tel"
+            placeholder="+974 5555 5555"
+            formControlName="phoneNumber"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="section" *ngIf="hasBaggage">
+      <h3>Baggage details</h3>
+      <p class="hint">Each piece gets a printable label with barcode. Add weight per piece (e.g. from scale).</p>
+      <div class="total-weight-row">
+        <span class="field-label">Total weight (kg)</span>
+        <span class="total-weight-value">{{ totalBaggageWeightKg }}</span>
+      </div>
+      <div formArrayName="baggageItems" class="baggage-list">
+        <div
+          *ngFor="let bag of baggageItems.controls; let i = index"
+          [formGroupName]="i"
+          class="baggage-block"
+        >
+          <div class="baggage-block-header">
+            <span class="baggage-label">Baggage {{ i + 1 }}</span>
+            <button type="button" class="btn-remove" (click)="removeBaggage(i)" *ngIf="baggageItems.length > 1">
+              Remove
+            </button>
+          </div>
+          <div class="grid-2">
+            <div>
+              <span class="field-label">Baggage type</span>
+              <select class="input select" formControlName="baggageType">
+                <option *ngFor="let opt of baggageTypeOptions" [value]="opt.value">{{ opt.label }}</option>
+              </select>
+            </div>
+            <div>
+              <span class="field-label">Pieces</span>
+              <input
+                class="input"
+                type="number"
+                min="1"
+                formControlName="pieces"
+              />
+            </div>
+          </div>
+          <div formArrayName="weights" class="weights-list">
+            <div
+              *ngFor="let w of getBaggageWeights(bag).controls; let j = index"
+              class="weight-row"
+            >
+              <span class="field-label">Piece {{ j + 1 }} weight (kg)</span>
+              <input
+                class="input"
+                type="number"
+                min="0"
+                step="0.1"
+                [formControlName]="j"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn-add" (click)="addBaggage()">+ Add baggage</button>
+    </div>
+
+    <div class="section" *ngIf="hasVehicle">
+      <h3>Vehicle details</h3>
+      <p class="hint">Each vehicle gets a label with barcode. Add more if needed.</p>
+      <div formArrayName="vehicleItems" class="vehicle-list">
+        <div
+          *ngFor="let veh of vehicleItems.controls; let i = index"
+          [formGroupName]="i"
+          class="vehicle-block"
+        >
+          <div class="vehicle-block-header">
+            <span class="vehicle-label">Vehicle {{ i + 1 }}</span>
+            <button type="button" class="btn-remove" (click)="removeVehicle(i)" *ngIf="vehicleItems.length > 1">
+              Remove
+            </button>
+          </div>
+          <div class="grid-3">
+            <div>
+              <span class="field-label">Plate number</span>
+              <input
+                class="input"
+                type="text"
+                placeholder="ABC-1234"
+                formControlName="plateNumber"
+              />
+            </div>
+            <div>
+              <span class="field-label">Type</span>
+              <input
+                class="input"
+                type="text"
+                placeholder="SUV, Truck, Van..."
+                formControlName="type"
+              />
+            </div>
+            <div>
+              <span class="field-label">Length (m)</span>
+              <input
+                class="input"
+                type="number"
+                min="0"
+                step="0.1"
+                formControlName="lengthM"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn-add" (click)="addVehicle()">+ Add vehicle</button>
+    </div>
+
+    <div class="actions">
+      <button class="btn-primary" type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Submitting…' : 'Submit' }}
+      </button>
+    </div>
+  </form>
+</div>

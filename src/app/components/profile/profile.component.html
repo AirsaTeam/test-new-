@@ -1,0 +1,47 @@
+<div class="profile-page">
+  <h2 class="page-title">My profile</h2>
+  <div class="profile-card" *ngIf="user$ | async as u">
+    <div class="avatar-section">
+      <img
+        *ngIf="u.avatarUrl"
+        [src]="u.avatarUrl"
+        alt="Avatar"
+        class="avatar-img"
+      />
+      <div *ngIf="!u.avatarUrl" class="avatar-placeholder">
+        {{ (u.displayName || u.username).charAt(0).toUpperCase() }}
+      </div>
+      <p class="avatar-hint">Enter image URL below to set photo</p>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="profile-form">
+      <div class="form-group">
+        <label>Email</label>
+        <p class="readonly">{{ u.email }}</p>
+      </div>
+      <div class="form-group">
+        <label>Username</label>
+        <p class="readonly">{{ u.username }}</p>
+      </div>
+      <div class="form-group">
+        <label for="displayName">Display name</label>
+        <input id="displayName" type="text" formControlName="displayName" />
+      </div>
+      <div class="form-group">
+        <label for="avatarUrl">Photo URL</label>
+        <input id="avatarUrl" type="url" formControlName="avatarUrl" placeholder="https://..." />
+      </div>
+      <div class="form-group">
+        <label for="newPassword">New password (leave blank to keep)</label>
+        <input id="newPassword" type="password" formControlName="newPassword" placeholder="Min 6 characters" />
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm new password</label>
+        <input id="confirmPassword" type="password" formControlName="confirmPassword" />
+      </div>
+      <p class="msg" *ngIf="message">{{ message }}</p>
+      <button type="submit" class="btn btn-primary" [disabled]="loading">
+        {{ loading ? 'Saving...' : 'Save changes' }}
+      </button>
+    </form>
+  </div>
+</div>

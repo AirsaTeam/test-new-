@@ -1,0 +1,28 @@
+<div class="admin-cargo">
+  <header class="section-header">
+    <h2 class="section-title">Shipping system</h2>
+    <button type="button" class="btn btn-secondary" (click)="back()">Back to admin panel</button>
+  </header>
+  <div class="cargo-layout">
+    <div class="list-panel">
+      <p class="hint" *ngIf="storedBookings.length === 0">No trips submitted yet.</p>
+      <ul class="booking-list">
+        <li
+          *ngFor="let sb of storedBookings"
+          class="booking-item"
+          [class.selected]="selectedBooking?.reference === sb.booking.reference"
+          (click)="selectBooking(sb.booking)"
+        >
+          <span class="ref">{{ sb.booking.reference }}</span>
+          <span class="route">{{ sb.booking.originPort }} → {{ sb.booking.destinationPort }}</span>
+          <span class="date">{{ sb.booking.departureDate | date: 'short' }}</span>
+          <span class="types">{{ getCargoSummary(sb.booking) }}</span>
+          <span class="user">Submitted by: {{ getUserName(sb.userId) }}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="detail-panel" *ngIf="selectedBooking">
+      <app-booking-summary [booking]="selectedBooking"></app-booking-summary>
+    </div>
+  </div>
+</div>

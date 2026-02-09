@@ -1,0 +1,38 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-header">
+      <img src="/logo-shinas.png" alt="Shinas Port" class="auth-logo" />
+      <h1 class="auth-title">Verify your email</h1>
+      <p class="auth-subtitle">Enter the 6-digit code sent to your email</p>
+    </div>
+    <form [formGroup]="form"
+     (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group" *ngIf="email">
+        <label>Email</label>
+        <p class="email-display">{{ email }}</p>
+      </div>
+      <div class="form-group">
+        <label for="code">Verification code</label>
+        <input
+          id="code"
+          type="text"
+          formControlName="code"
+          placeholder="000000"
+          maxlength="6"
+          autocomplete="one-time-code"
+        />
+        <span class="error" *ngIf="form.get('code')?.invalid && form.get('code')?.touched">
+          Enter 6-digit code
+        </span>
+      </div>
+      <p class="hint">Check your inbox (and spam). For demo, code is also shown in browser console.</p>
+      <p class="error-msg" *ngIf="error">{{ error }}</p>
+      <button type="submit" class="btn btn-primary" [disabled]="loading">
+        {{ loading ? 'Verifying...' : 'Verify and continue' }}
+      </button>
+      <p class="auth-footer">
+        <a routerLink="/login">Back to login</a>
+      </p>
+    </form>
+  </div>
+</div>

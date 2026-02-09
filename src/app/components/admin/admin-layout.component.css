@@ -1,0 +1,44 @@
+.admin-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at top right, #0f172a 0%, #020617 60%);
+  color: #e5e7eb;
+}
+
+.admin-layout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(30, 41, 59, 0.95);
+  border-bottom: 1px solid rgba(71, 85, 105, 0.5);
+}
+
+.admin-layout-title {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #f1f5f9;
+}
+
+.btn-back {
+  padding: 0.5rem 1rem;
+  background: rgba(71, 85, 105, 0.6);
+  color: #e2e8f0;
+  border: 1px solid rgba(71, 85, 105, 0.8);
+  border-radius: 0.35rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.btn-back:hover {
+  background: rgba(71, 85, 105, 0.8);
+}
+
+.admin-layout-main {
+  flex: 1;
+  padding: 1.25rem;
+  overflow: auto;
+}

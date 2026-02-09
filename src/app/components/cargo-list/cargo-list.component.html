@@ -1,0 +1,24 @@
+<div class="cargo-list-page">
+  <h2 class="page-title">Passengers & submitted cargo</h2>
+  <div class="cargo-layout">
+    <div class="list-panel">
+      <p class="hint" *ngIf="(bookings$ | async)?.length === 0">No submissions yet. Use Registration to add a booking.</p>
+      <ul class="cargo-list">
+        <li
+          *ngFor="let booking of bookings$ | async"
+          class="cargo-item"
+          [class.selected]="selectedBooking?.reference === booking.reference"
+          (click)="selectBooking(booking)"
+        >
+          <span class="ref">{{ booking.reference }}</span>
+          <span class="route">{{ booking.originPort }} → {{ booking.destinationPort }}</span>
+          <span class="date">{{ booking.departureDate | date: 'short' }}</span>
+          <span class="types">{{ getCargoSummary(booking) }}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="detail-panel" *ngIf="selectedBooking">
+      <app-booking-summary [booking]="selectedBooking"></app-booking-summary>
+    </div>
+  </div>
+</div>

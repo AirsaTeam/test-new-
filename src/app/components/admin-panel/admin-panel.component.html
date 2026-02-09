@@ -1,0 +1,51 @@
+<div class="admin-panel">
+  <header class="admin-header">
+    <h1 class="admin-title">System users</h1>
+    <button type="button" class="btn btn-secondary" (click)="back()">Back to admin panel</button>
+  </header>
+  <p class="error-msg" *ngIf="error">{{ error }}</p>
+  <div class="table-wrap" *ngIf="!loading">
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Username</th>
+          <th>Display name</th>
+          <th>Role</th>
+          <th>Verified</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of users" [class.editing]="editingId === u.id">
+          <td>
+            <span *ngIf="editingId !== u.id">{{ u.email }}</span>
+            <input *ngIf="editingId === u.id" [(ngModel)]="editForm.email" disabled class="input-cell" />
+          </td>
+          <td>
+            <span *ngIf="editingId !== u.id">{{ u.username }}</span>
+            <input *ngIf="editingId === u.id" [(ngModel)]="editForm.username" class="input-cell" />
+          </td>
+          <td>
+            <span *ngIf="editingId !== u.id">{{ u.displayName }}</span>
+            <input *ngIf="editingId === u.id" [(ngModel)]="editForm.displayName" class="input-cell" />
+          </td>
+          <td>{{ u.role }}</td>
+          <td>{{ u.emailVerified ? 'Yes' : 'No' }}</td>
+          <td>
+            <ng-container *ngIf="editingId === u.id">
+              <button type="button" class="btn btn-sm btn-primary" (click)="saveEdit()">Save</button>
+              <button type="button" class="btn btn-sm btn-secondary" (click)="cancelEdit()">Cancel</button>
+            </ng-container>
+            <ng-container *ngIf="editingId !== u.id">
+              <button type="button" class="btn btn-sm btn-secondary" (click)="startEdit(u)">Edit</button>
+              <button type="button" class="btn btn-sm btn-danger" (click)="deleteUser(u)">Delete</button>
+            </ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p *ngIf="loading" class="loading">Loading users...</p>
+  <p *ngIf="!loading && users.length === 0" class="empty">No users yet.</p>
+</div>

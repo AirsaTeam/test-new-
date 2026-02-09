@@ -1,0 +1,418 @@
+.ticket-wrapper {
+  padding: 0.75rem;
+  min-width: 0;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.ticket-wrapper-footer {
+  padding: 0.5rem 0;
+}
+
+.ticket {
+  background: rgba(30, 41, 59, 0.88);
+  color: #f1f5f9;
+  border-radius: 1rem;
+  border: 1px solid rgba(71, 85, 105, 0.6);
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.ticket-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px dashed rgba(71, 85, 105, 0.5);
+  background: transparent;
+  color: #f1f5f9;
+  min-width: 0;
+}
+
+.ticket-header > div:first-child {
+  min-width: 0;
+  flex: 1 1 200px;
+}
+
+.ticket-header h2 {
+  margin: 0;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  letter-spacing: 0.1em;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.muted {
+  margin: 0.3rem 0 0;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.ref-block {
+  text-align: right;
+}
+
+.ref-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #94a3b8;
+}
+
+.ref-value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+  font-size: 0.95rem;
+  color: #f1f5f9;
+}
+
+.ticket-body {
+  padding: 1rem 1.25rem;
+  min-width: 0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.col {
+  min-width: 0;
+  flex: 1 1 120px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #94a3b8;
+  margin-bottom: 0.15rem;
+}
+
+.value {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #f1f5f9;
+}
+
+.divider {
+  border-top: 1px dashed rgba(71, 85, 105, 0.6);
+  margin: 0.6rem 0 0.95rem;
+}
+
+.ticket-footer {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgba(71, 85, 105, 0.5);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+@media (min-width: 620px) {
+  .ticket {
+    max-width: 620px;
+  }
+
+  .ticket-wrapper {
+    padding: 1rem;
+  }
+}
+
+.btn-outline {
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  padding: 0.35rem 1.1rem;
+  background: rgba(51, 65, 85, 0.6);
+  color: #f1f5f9;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.1s ease, border-color 0.1s ease, color 0.1s ease, transform 0.05s ease;
+}
+
+.btn-outline:hover {
+  background: rgba(71, 85, 105, 0.8);
+  border-color: #38bdf8;
+  color: #f1f5f9;
+  transform: translateY(-1px);
+}
+
+.footer-note {
+  opacity: 0.9;
+}
+
+/* Baggage & vehicle labels (printable, with barcode) */
+.label-card {
+  background: rgba(30, 41, 59, 0.88);
+  color: #f1f5f9;
+  border-radius: 1rem;
+  border: 1px solid rgba(71, 85, 105, 0.6);
+  overflow: hidden;
+  max-width: 400px;
+}
+
+.label-header {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(71, 85, 105, 0.5);
+}
+
+.label-header h3 {
+  margin: 0 0 0.25rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+}
+
+.label-body {
+  padding: 1rem;
+}
+
+.label-row {
+  margin-bottom: 0.5rem;
+}
+
+.label-row .label {
+  margin-bottom: 0.1rem;
+}
+
+.barcode-id {
+  font-family: ui-monospace, monospace;
+  font-size: 0.75rem;
+  word-break: break-all;
+}
+
+.barcode-wrap {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background: #fff;
+  border-radius: 0.5rem;
+  display: inline-block;
+}
+
+.barcode-wrap canvas {
+  display: block;
+}
+
+/* ========== Printable outputs (boarding pass, ticket, labels, receipt) ========== */
+.print-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: #1e293b;
+  color: #fff;
+}
+
+.print-header.compact {
+  padding: 0.5rem 0.75rem;
+}
+
+.print-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.print-logo.small {
+  height: 28px;
+}
+
+.print-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.print-title.small {
+  font-size: 0.95rem;
+}
+
+.print-label-heading {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* Boarding pass: two-part layout */
+.boarding-pass-body {
+  display: flex;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #0f172a;
+}
+
+.boarding-main {
+  flex: 1;
+  padding: 1rem 1.25rem;
+  min-width: 0;
+}
+
+.boarding-stub {
+  width: 36%;
+  max-width: 180px;
+  padding: 1rem;
+  border-left: 2px dashed #64748b;
+}
+
+.print-field {
+  margin: 0 0 0.6rem;
+  font-size: 0.9rem;
+}
+
+.print-field-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+}
+
+.print-notice {
+  font-size: 0.7rem;
+  color: #475569;
+  margin: 0.75rem 0 0.5rem;
+  padding: 0.35rem 0;
+  border-left: 3px solid #0ea5e9;
+  padding-left: 0.5rem;
+}
+
+.print-barcode-block {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  display: inline-block;
+}
+
+.print-barcode-block canvas {
+  display: block;
+}
+
+.print-barcode-caption {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  color: #475569;
+}
+
+/* Back of card: both logos */
+.print-back {
+  padding: 2rem 1rem;
+  text-align: center;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  margin-top: 1rem;
+}
+
+.print-back-title {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.print-back-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.print-back-logo {
+  height: 56px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Passenger ticket card */
+.passenger-ticket .ticket-card-front,
+.ticket-card-front {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #0f172a;
+}
+
+.ticket-card-body {
+  padding: 1rem 1.25rem;
+}
+
+/* Baggage label card */
+.baggage-label-front,
+.vehicle-label-front {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #0f172a;
+}
+
+.baggage-label-front .label-body,
+.vehicle-label-front .label-body {
+  padding: 1rem;
+}
+
+.cabin-label .print-label-heading {
+  color: #0284c7;
+}
+
+/* Receipt */
+.receipt-front {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #0f172a;
+}
+
+.receipt-body {
+  padding: 1rem;
+}
+
+@media print {
+  body {
+    background: white;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .ticket,
+  .label-card,
+  .boarding-pass-front,
+  .ticket-card-front,
+  .baggage-label-front,
+  .vehicle-label-front,
+  .receipt-front {
+    box-shadow: none;
+    margin: 0;
+    max-width: none;
+  }
+
+  .print-section {
+    page-break-after: always;
+  }
+
+  .print-back {
+    page-break-before: always;
+    margin-top: 0;
+  }
+
+  .print-section:last-child {
+    page-break-after: auto;
+  }
+}

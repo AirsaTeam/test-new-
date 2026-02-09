@@ -1,0 +1,144 @@
+<div class="ticket-wrapper">
+  <!-- ========== BOARDING PASS (two-part: main + detachable stub) ========== -->
+  <div class="print-section boarding-pass" *ngIf="booking.hasPassenger">
+    <div class="boarding-pass-front">
+      <header class="print-header">
+        <img src="/logo-shinas.png" alt="Shinas Port" class="print-logo print-logo-shinas" />
+        <img src="/logo-wml.png" alt="World Modern Lights LLC" class="print-logo print-logo-wml" />
+        <h1 class="print-title">Boarding Pass</h1>
+      </header>
+      <div class="boarding-pass-body">
+        <div class="boarding-main">
+          <p class="print-field"><span class="print-field-label">NAME OF PASSENGER</span><br>{{ booking.passengerName || '—' }}</p>
+          <p class="print-field"><span class="print-field-label">FROM</span><br>{{ booking.originPort }}</p>
+          <p class="print-field"><span class="print-field-label">TO</span><br>{{ booking.destinationPort }}</p>
+          <p class="print-field"><span class="print-field-label">CARRIER</span><br>{{ carrierName }}</p>
+          <p class="print-field"><span class="print-field-label">DATE</span><br>{{ booking.departureDate | date: 'dd/MM/yyyy' }}</p>
+          <p class="print-field"><span class="print-field-label">TIME</span><br>{{ booking.departureDate | date: 'shortTime' }}</p>
+          <p class="print-field"><span class="print-field-label">SEAT</span><br>{{ booking.seatNumber || '—' }}</p>
+          <p class="print-field"><span class="print-field-label">TKT NO.</span><br>{{ booking.ticketNumber || booking.reference }}</p>
+          <p class="print-field"><span class="print-field-label">PIECES/WEIGHT</span><br>{{ booking.baggagePieces || 0 }} / {{ booking.baggageWeightKg || 0 }} kg</p>
+          <p class="print-notice">PLEASE ENSURE YOU ARE AT THE BOARDING GATE AT LEAST 45 MINUTES BEFORE DEPARTURE TIME.</p>
+          <div class="print-barcode-block">
+            <app-barcode [value]="boardingPassBarcode" [height]="44"></app-barcode>
+            <span class="print-barcode-caption">{{ booking.passengerName }} · {{ booking.seatNumber || '—' }} · {{ booking.seatingArea || '—' }}</span>
+          </div>
+        </div>
+        <div class="boarding-stub">
+          <p class="print-field"><span class="print-field-label">NAME OF PASSENGER</span><br>{{ booking.passengerName || '—' }}</p>
+          <p class="print-field"><span class="print-field-label">FROM</span><br>{{ booking.originPort }}</p>
+          <p class="print-field"><span class="print-field-label">TO</span><br>{{ booking.destinationPort }}</p>
+          <p class="print-field"><span class="print-field-label">DATE</span><br>{{ booking.departureDate | date: 'dd/MM/yyyy' }}</p>
+          <p class="print-field"><span class="print-field-label">TIME</span><br>{{ booking.departureDate | date: 'shortTime' }}</p>
+          <p class="print-field"><span class="print-field-label">GATE</span><br>{{ booking.departureGate || '—' }}</p>
+          <p class="print-field"><span class="print-field-label">BOARDING TIME</span><br>{{ booking.boardingTime || (booking.departureDate | date: 'shortTime') }}</p>
+          <p class="print-field"><span class="print-field-label">SEAT</span><br>{{ booking.seatNumber || '—' }}</p>
+          <p class="print-field"><span class="print-field-label">PIECES/WEIGHT</span><br>{{ booking.baggagePieces || 0 }} / {{ booking.baggageWeightKg || 0 }} kg</p>
+          <div class="print-barcode-block">
+            <app-barcode [value]="boardingPassBarcode" [height]="36"></app-barcode>
+            <span class="print-barcode-caption">{{ booking.passengerName }} · {{ booking.seatNumber || '—' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="print-back">
+      <p class="print-back-title">Shinas Port International Terminal</p>
+      <div class="print-back-logos">
+        <img src="/logo-shinas.png" alt="Shinas Port" class="print-back-logo" />
+        <img src="/logo-wml.png" alt="World Modern Lights LLC" class="print-back-logo" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PASSENGER TICKET ========== -->
+  <div class="print-section passenger-ticket" *ngIf="booking.hasPassenger">
+    <div class="ticket-card-front">
+      <header class="print-header">
+        <img src="/logo-shinas.png" alt="Shinas Port" class="print-logo print-logo-shinas" />
+        <img src="/logo-wml.png" alt="World Modern Lights LLC" class="print-logo print-logo-wml" />
+        <h1 class="print-title">Passenger Ticket</h1>
+      </header>
+      <section class="ticket-card-body">
+        <div class="row"><div class="col"><span class="label">Reference</span><span class="value">{{ booking.reference }}</span></div></div>
+        <div class="row"><div class="col"><span class="label">Passenger</span><span class="value">{{ booking.passengerName }} ({{ booking.passengerIdNumber }})</span></div></div>
+        <div class="row"><div class="col"><span class="label">From</span><span class="value">{{ booking.originPort }}</span></div><div class="col"><span class="label">To</span><span class="value">{{ booking.destinationPort }}</span></div></div>
+        <div class="row"><div class="col"><span class="label">Date / Time</span><span class="value">{{ booking.departureDate | date: 'medium' }}</span></div></div>
+        <div class="row"><div class="col"><span class="label">Carrier</span><span class="value">{{ carrierName }}</span></div></div>
+        <div class="row"><div class="col"><span class="label">Pieces / Weight</span><span class="value">{{ booking.baggagePieces || 0 }} / {{ booking.baggageWeightKg || 0 }} kg</span></div></div>
+        <div class="print-barcode-block"><app-barcode [value]="boardingPassBarcode" [height]="48"></app-barcode></div>
+      </section>
+    </div>
+    <div class="print-back"><p class="print-back-title">Shinas Port International Terminal</p><div class="print-back-logos"><img src="/logo-shinas.png" alt="Shinas Port" class="print-back-logo" /><img src="/logo-wml.png" alt="World Modern Lights LLC" class="print-back-logo" /></div></div>
+  </div>
+
+  <!-- ========== BAGGAGE LABELS (one per piece; cabin variant when type = cabin) ========== -->
+  <div *ngFor="let item of baggagePiecesWithType; let i = index" class="print-section baggage-label-wrap">
+    <div class="baggage-label-front" [class.cabin-label]="isCabinBaggage(item)">
+      <header class="print-header compact">
+        <img src="/logo-shinas.png" alt="Shinas Port" class="print-logo small" />
+        <span class="print-label-heading">{{ isCabinBaggage(item) ? 'CABIN BAGGAGE (MAX 7KG)' : 'BAGGAGE LABEL ' + (i + 1) }}</span>
+      </header>
+      <section class="label-body">
+        <p class="print-field"><span class="print-field-label">Passenger Name</span><br>{{ booking.passengerName || '—' }}</p>
+        <p class="print-field"><span class="print-field-label">Passenger ID</span><br>{{ booking.passengerIdNumber || '—' }}</p>
+        <p class="print-field"><span class="print-field-label">Date</span><br>{{ booking.departureDate | date: 'dd/MM/yyyy' }}</p>
+        <p class="print-field"><span class="print-field-label">Origin</span><br>{{ booking.originPort }}</p>
+        <p class="print-field"><span class="print-field-label">Destination</span><br>{{ booking.destinationPort }}</p>
+        <p class="print-field"><span class="print-field-label">Baggage Type</span><br>{{ item.type }}</p>
+        <p class="print-field"><span class="print-field-label">Weight (kg)</span><br>{{ item.piece.weightKg }}</p>
+        <p class="print-field"><span class="print-field-label">Carrier</span><br>{{ shippingCompanyName }}</p>
+        <div class="print-barcode-block"><app-barcode [value]="item.piece.barcodeId" [height]="50"></app-barcode></div>
+      </section>
+    </div>
+    <div class="print-back"><p class="print-back-title">Shinas Port International Terminal</p><div class="print-back-logos"><img src="/logo-shinas.png" alt="Shinas Port" class="print-back-logo" /><img src="/logo-wml.png" alt="World Modern Lights LLC" class="print-back-logo" /></div></div>
+  </div>
+
+  <!-- ========== VEHICLE LABELS ========== -->
+  <div *ngFor="let veh of allVehicles; let i = index" class="print-section vehicle-label-wrap">
+    <div class="vehicle-label-front">
+      <header class="print-header">
+        <img src="/logo-shinas.png" alt="Shinas Port" class="print-logo print-logo-shinas" />
+        <h1 class="print-title">Vehicle Shipping Label {{ i + 1 }}</h1>
+      </header>
+      <section class="label-body">
+        <p class="print-field"><span class="print-field-label">Plate</span><br>{{ veh.plateNumber }}</p>
+        <p class="print-field"><span class="print-field-label">Type</span><br>{{ veh.type }}</p>
+        <p class="print-field" *ngIf="veh.make"><span class="print-field-label">Make / Model / Year</span><br>{{ veh.make }} {{ veh.model }} {{ veh.year }}</p>
+        <p class="print-field" *ngIf="veh.engineNumber"><span class="print-field-label">Engine No.</span><br>{{ veh.engineNumber }}</p>
+        <p class="print-field" *ngIf="veh.chassisNumber"><span class="print-field-label">Chassis No.</span><br>{{ veh.chassisNumber }}</p>
+        <p class="print-field" *ngIf="veh.ownerName"><span class="print-field-label">Owner</span><br>{{ veh.ownerName }} {{ veh.ownerContact || '' }}</p>
+        <p class="print-field"><span class="print-field-label">Origin</span><br>{{ booking.originPort }}</p>
+        <p class="print-field"><span class="print-field-label">Destination</span><br>{{ booking.destinationPort }}</p>
+        <p class="print-field"><span class="print-field-label">Sender</span><br>{{ veh.senderCompany || '—' }}</p>
+        <p class="print-field"><span class="print-field-label">Receiver</span><br>{{ veh.receiverCompany || '—' }}</p>
+        <p class="print-field"><span class="print-field-label">Carrier</span><br>{{ shippingCompanyName }}</p>
+        <div class="print-barcode-block"><app-barcode [value]="veh.barcodeId" [height]="50"></app-barcode></div>
+      </section>
+    </div>
+    <div class="print-back"><p class="print-back-title">Shinas Port International Terminal</p><div class="print-back-logos"><img src="/logo-shinas.png" alt="Shinas Port" class="print-back-logo" /><img src="/logo-wml.png" alt="World Modern Lights LLC" class="print-back-logo" /></div></div>
+  </div>
+
+  <!-- ========== PAPER RECEIPT (tracking + barcode) ========== -->
+  <div class="print-section paper-receipt">
+    <div class="receipt-front">
+      <header class="print-header compact">
+        <img src="/logo-shinas.png" alt="Shinas Port" class="print-logo small" />
+        <img src="/logo-wml.png" alt="World Modern Lights LLC" class="print-logo small" />
+        <h2 class="print-title small">Registration Receipt</h2>
+      </header>
+      <section class="receipt-body">
+        <p class="print-field"><span class="print-field-label">Tracking Number</span><br>{{ booking.reference }}</p>
+        <p class="print-field"><span class="print-field-label">Date</span><br>{{ booking.createdAt | date: 'medium' }}</p>
+        <p class="print-field"><span class="print-field-label">Passenger</span><br>{{ booking.passengerName || '—' }}</p>
+        <p class="print-field"><span class="print-field-label">Route</span><br>{{ booking.originPort }} → {{ booking.destinationPort }}</p>
+        <p class="print-field"><span class="print-field-label">Cargo</span><br>{{ cargoTypesLabel }} · {{ booking.baggagePieces || 0 }} pcs / {{ booking.baggageWeightKg || 0 }} kg</p>
+        <div class="print-barcode-block"><app-barcode [value]="booking.reference" [height]="56"></app-barcode></div>
+      </section>
+    </div>
+    <div class="print-back"><p class="print-back-title">Shinas Port International Terminal</p><div class="print-back-logos"><img src="/logo-shinas.png" alt="Shinas Port" class="print-back-logo" /><img src="/logo-wml.png" alt="World Modern Lights LLC" class="print-back-logo" /></div></div>
+  </div>
+
+  <footer class="ticket-wrapper-footer no-print">
+    <button class="btn-outline" (click)="print()">Print all</button>
+  </footer>
+</div>
