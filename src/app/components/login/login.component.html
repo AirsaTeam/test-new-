@@ -1,20 +1,22 @@
 <div class="auth-page">
   <div class="auth-card">
     <div class="auth-header">
-      <h1 class="auth-title">Login</h1>
+      <img src="/logo-shinas.png" alt="" class="auth-logo" />
+      <h1 class="auth-title">Sign in</h1>
+      <p class="auth-subtitle">Enter your credentials to access your Shinas account</p>
     </div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form">
       <div class="form-group">
-        <label for="username">Username or Email</label>
+        <label for="username">Username or email</label>
         <input
           id="username"
           type="text"
           formControlName="username"
-          placeholder="Username or email"
+          placeholder="e.g. john@example.com"
           autocomplete="username"
         />
         <span class="error" *ngIf="form.get('username')?.invalid && form.get('username')?.touched">
-          Required
+          This field is required
         </span>
       </div>
       <div class="form-group">
@@ -24,7 +26,7 @@
             id="password"
             [type]="hidePassword ? 'password' : 'text'"
             formControlName="password"
-            placeholder="Password"
+            placeholder="Enter your password"
             autocomplete="current-password"
           />
           <button type="button" class="input-icon-btn" (click)="hidePassword = !hidePassword" [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'" title="{{ hidePassword ? 'Show password' : 'Hide password' }}">
@@ -33,17 +35,17 @@
           </button>
         </div>
         <span class="error" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
-          Required
+          This field is required
         </span>
       </div>
-      <p class="error-msg" *ngIf="error">{{ error }}</p>
+      <div class="form-alert error-msg" *ngIf="error" role="alert">{{ error }}</div>
       <button type="submit" class="btn btn-primary" [disabled]="loading">
         {{ loading ? 'Signing in...' : 'Sign in' }}
       </button>
-      <p class="auth-footer">
-        Don't have an account?
-        <a routerLink="/signup">Create account</a>
-      </p>
+      <div class="auth-footer">
+        <span class="auth-footer-text">Don't have an account?</span>
+        <a routerLink="/signup" class="auth-footer-link">Create account</a>
+      </div>
     </form>
   </div>
 </div>

@@ -1,11 +1,12 @@
 <div class="auth-page">
   <div class="auth-card">
     <div class="auth-header">
+      <img src="/logo-shinas.png" alt="" class="auth-logo" />
       <h1 class="auth-title">Create account</h1>
-      <p class="auth-subtitle">Register with your email</p>
+      <p class="auth-subtitle">Register with your email to get started with Shinas</p>
     </div>
-    <div *ngIf="success" class="success-msg">
-      Account created. Redirecting to verify your email...
+    <div *ngIf="success" class="form-alert success-msg" role="status">
+      Account created successfully. Redirecting to verify your email...
     </div>
     <form *ngIf="!success" [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form">
       <div class="form-group">
@@ -18,7 +19,7 @@
           autocomplete="email"
         />
         <span class="error" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
-          Valid email required
+          Please enter a valid email address
         </span>
       </div>
       <div class="form-group">
@@ -27,20 +28,20 @@
           id="username"
           type="text"
           formControlName="username"
-          placeholder="Username (min 3 characters)"
+          placeholder="At least 3 characters"
           autocomplete="username"
         />
         <span class="error" *ngIf="form.get('username')?.invalid && form.get('username')?.touched">
-          At least 3 characters
+          Username must be at least 3 characters
         </span>
       </div>
-      <div class="form-group">
-        <label for="displayName">Display name (optional)</label>
+      <div class="form-group form-group-optional">
+        <label for="displayName">Display name <span class="optional-label">(optional)</span></label>
         <input
           id="displayName"
           type="text"
           formControlName="displayName"
-          placeholder="Display name"
+          placeholder="How you want to be shown"
         />
       </div>
       <div class="form-group">
@@ -50,7 +51,7 @@
             id="password"
             [type]="hidePassword ? 'password' : 'text'"
             formControlName="password"
-            placeholder="Min 6 characters"
+            placeholder="At least 6 characters"
             autocomplete="new-password"
           />
           <button type="button" class="input-icon-btn" (click)="hidePassword = !hidePassword" [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'" title="{{ hidePassword ? 'Show password' : 'Hide password' }}">
@@ -59,7 +60,7 @@
           </button>
         </div>
         <span class="error" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
-          Min 6 characters
+          Password must be at least 6 characters
         </span>
       </div>
       <div class="form-group">
@@ -69,7 +70,7 @@
             id="confirmPassword"
             [type]="hideConfirmPassword ? 'password' : 'text'"
             formControlName="confirmPassword"
-            placeholder="Confirm password"
+            placeholder="Re-enter your password"
             autocomplete="new-password"
           />
           <button type="button" class="input-icon-btn" (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="hideConfirmPassword ? 'Show password' : 'Hide password'" title="{{ hideConfirmPassword ? 'Show password' : 'Hide password' }}">
@@ -78,14 +79,14 @@
           </button>
         </div>
       </div>
-      <p class="error-msg" *ngIf="error">{{ error }}</p>
+      <div class="form-alert error-msg" *ngIf="error" role="alert">{{ error }}</div>
       <button type="submit" class="btn btn-primary" [disabled]="loading">
-        {{ loading ? 'Creating...' : 'Create account' }}
+        {{ loading ? 'Creating account...' : 'Create account' }}
       </button>
-      <p class="auth-footer">
-        Already have an account?
-        <a routerLink="/login">Sign in</a>
-      </p>
+      <div class="auth-footer">
+        <span class="auth-footer-text">Already have an account?</span>
+        <a routerLink="/login" class="auth-footer-link">Sign in</a>
+      </div>
     </form>
   </div>
 </div>
