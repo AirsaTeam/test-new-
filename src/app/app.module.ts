@@ -22,6 +22,7 @@ import { AdminLayoutComponent } from './components/admin/admin-layout.component'
 import { AdminDashboardComponent } from './components/admin/admin-dashboard.component';
 import { AdminCargoComponent } from './components/admin-cargo/admin-cargo.component';
 import { AdminReportsComponent } from './components/admin-reports/admin-reports.component';
+import { AdminSearchComponent } from './components/admin-search/admin-search.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { AdminReportsComponent } from './components/admin-reports/admin-reports.
     AdminDashboardComponent,
     AdminCargoComponent,
     AdminReportsComponent,
+    AdminSearchComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,62 @@
+<div class="admin-search">
+  <div class="search-header">
+    <button type="button" class="btn-back" (click)="back()">بازگشت به داشبورد</button>
+    <h2 class="page-title">جستجوی رزرو (PNR / پاسپورت / شناسایی)</h2>
+  </div>
+
+  <div class="search-form">
+    <div class="form-row">
+      <div class="field">
+        <label for="ref">کد PNR (شماره رزرو)</label>
+        <input id="ref" type="text" [(ngModel)]="reference" placeholder="مثلاً SC-xxx-xx" />
+      </div>
+      <div class="field">
+        <label for="pass">شماره پاسپورت</label>
+        <input id="pass" type="text" [(ngModel)]="passport" placeholder="شماره پاسپورت" />
+      </div>
+      <div class="field">
+        <label for="idn">شماره شناسایی (ID)</label>
+        <input id="idn" type="text" [(ngModel)]="idNumber" placeholder="شماره ملی / شناسنامه" />
+      </div>
+    </div>
+    <button type="button" class="btn-search" (click)="search()" [disabled]="loading">
+      {{ loading ? 'در حال جستجو...' : 'جستجو' }}
+    </button>
+  </div>
+
+  <p class="error-msg" *ngIf="error">{{ error }}</p>
+
+  <div class="results-section" *ngIf="results.length > 0">
+    <h3>نتیجه ({{ results.length }} رزرو)</h3>
+    <div class="results-table-wrap">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>PNR</th>
+            <th>مسافر</th>
+            <th>پاسپورت / ID</th>
+            <th>مبدا → مقصد</th>
+            <th>نوع بار</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let b of results">
+            <td><strong>{{ b.reference }}</strong></td>
+            <td>{{ b.passengerName || '—' }}</td>
+            <td>{{ b.passportNumber || b.passengerIdNumber || '—' }}</td>
+            <td>{{ b.originPort }} → {{ b.destinationPort }}</td>
+            <td>{{ getCargoSummary(b) }}</td>
+            <td>
+              <button type="button" class="btn-view" (click)="selectBooking(b)">مشاهده</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="no-results" *ngIf="!loading && reference + passport + idNumber && results.length === 0 && !error">
+    <p>رزروی با این معیارها یافت نشد.</p>
+  </div>
+</div>

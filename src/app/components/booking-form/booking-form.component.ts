@@ -37,6 +37,10 @@ export class BookingFormComponent implements OnInit {
 
   form!: FormGroup;
   isSubmitting = false;
+  formSubmitted = false;
+  submitError: string | null = null;
+  submitSuccess = false;
+  lastBooking: BookingRequest | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -52,6 +56,7 @@ export class BookingFormComponent implements OnInit {
 
       passengerName: ['', []],
       passengerIdNumber: ['', []],
+      passportNumber: ['', []],
       phoneNumber: ['', []],
 
       baggageItems: this.fb.array([]),
@@ -101,7 +106,7 @@ export class BookingFormComponent implements OnInit {
 
   private setupConditionalValidators() {
     this.form.get('hasPassenger')?.valueChanges.subscribe(() => {
-      const controls = ['passengerName', 'passengerIdNumber', 'phoneNumber'];
+      const controls = ['passengerName', 'passengerIdNumber', 'passportNumber', 'phoneNumber'];
       controls.forEach((name) => {
         const control = this.form.get(name);
         if (!control) return;
@@ -173,6 +178,11 @@ export class BookingFormComponent implements OnInit {
   }
 
   submit() {
+    this.formSubmitted = true;
+    this.submitError = null;
+    this.submitSuccess = false;
+    this.lastBooking = null;
+
     if (!this.form.valid) {
       this.form.markAllAsTouched();
       return;
@@ -184,6 +194,21 @@ export class BookingFormComponent implements OnInit {
     }
 
     const raw = this.form.value;
+
+    // Cabin baggage max 7kg per piece
+    if (this.hasBaggage && Array.isArray(raw.baggageItems)) {
+      for (const b of raw.baggageItems) {
+        if (b?.baggageType === 'cabin' && Array.isArray(b.weights)) {
+          for (const w of b.weights) {
+            const val = Number(w) || 0;
+            if (val > 7) {
+              this.submitError = 'Cabin baggage: each piece must be max 7kg.';
+              return;
+            }
+          }
+        }
+      }
+    }
 
     const baggageItems: BaggageItem[] = (raw.baggageItems || []).map(
       (b: { baggageType?: BaggageType; pieces: number; weights: number[] }) => {
@@ -227,6 +252,7 @@ export class BookingFormComponent implements OnInit {
       hasVehicle: raw.hasVehicle,
       passengerName: raw.passengerName || undefined,
       passengerIdNumber: raw.passengerIdNumber || undefined,
+      passportNumber: raw.passportNumber || undefined,
       phoneNumber: raw.phoneNumber || undefined,
       baggageItems: baggageItems.length ? baggageItems : undefined,
       baggagePieces: totalPieces || undefined,
@@ -245,6 +271,9 @@ export class BookingFormComponent implements OnInit {
     this.bookingService.createBooking(payload).subscribe({
       next: (booking) => {
         this.isSubmitting = false;
+        this.submitSuccess = true;
+        this.submitError = null;
+        this.lastBooking = booking;
         this.userBookings.addBooking(booking);
         this.bookingCreated.emit(booking);
       },
@@ -264,7 +293,8 @@ export class BookingFormComponent implements OnInit {
           }).catch(() => {});
         })();
         this.isSubmitting = false;
-        alert('Failed to create booking. Please try again.');
+        this.submitSuccess = false;
+        this.submitError = 'Failed to create booking. Please try again.';
       },
     });
   }

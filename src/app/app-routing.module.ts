@@ -14,6 +14,7 @@ import { AdminLayoutComponent } from './components/admin/admin-layout.component'
 import { AdminDashboardComponent } from './components/admin/admin-dashboard.component';
 import { AdminCargoComponent } from './components/admin-cargo/admin-cargo.component';
 import { AdminReportsComponent } from './components/admin-reports/admin-reports.component';
+import { AdminSearchComponent } from './components/admin-search/admin-search.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -40,6 +41,7 @@ const routes: Routes = [
       { path: 'users', component: AdminPanelComponent },
       { path: 'cargo', component: AdminCargoComponent },
       { path: 'reports', component: AdminReportsComponent },
+      { path: 'search', component: AdminSearchComponent },
     ],
   },
   { path: '**', redirectTo: 'login' },

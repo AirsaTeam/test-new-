@@ -27,6 +27,20 @@ export class BookingService {
     return `SC-${ts}-${rand}`;
   }
 
+  /** جستجو بر اساس PNR (reference)، شماره پاسپورت یا شماره شناسایی */
+  search(params: { reference?: string; passport?: string; id_number?: string }): Observable<BookingRequest[]> {
+    const q = new URLSearchParams();
+    if (params.reference?.trim()) q.set('reference', params.reference.trim());
+    if (params.passport?.trim()) q.set('passport', params.passport.trim());
+    if (params.id_number?.trim()) q.set('id_number', params.id_number.trim());
+    const query = q.toString();
+    return this.http.get<BookingRequest[]>(`${this.apiUrl}search${query ? '?' + query : ''}`);
+  }
+
+  getByReference(reference: string): Observable<BookingRequest> {
+    return this.http.get<BookingRequest>(`${this.apiUrl}${encodeURIComponent(reference)}/`);
+  }
+
   createBooking(request: BookingRequest): Observable<BookingRequest> {
     // #region agent log
     LOG({ hypothesisId: 'A', location: 'booking.service.ts:createBooking', message: 'POST entry', data: { apiUrl: this.apiUrl, originPort: request.originPort, destinationPort: request.destinationPort } });

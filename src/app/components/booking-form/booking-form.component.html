@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card no-print">
   <div class="card-header">
     <h2>Registration Form</h2>
   </div>
@@ -37,6 +37,9 @@
               placeholder="e.g. DOHA"
               formControlName="originPort"
             />
+            <div class="error-text" *ngIf="formSubmitted && form.get('originPort')?.invalid">
+              Origin port is required.
+            </div>
           </div>
           <div>
             <span class="field-label">Destination port</span>
@@ -46,18 +49,24 @@
               placeholder="e.g. DUBAI"
               formControlName="destinationPort"
             />
+            <div class="error-text" *ngIf="formSubmitted && form.get('destinationPort')?.invalid">
+              Destination port is required.
+            </div>
           </div>
         </div>
         <div class="mt-8">
           <span class="field-label">Departure date &amp; time</span>
           <input class="input" type="datetime-local" formControlName="departureDate" />
+          <div class="error-text" *ngIf="formSubmitted && form.get('departureDate')?.invalid">
+            Departure date &amp; time is required.
+          </div>
         </div>
       </div>
     </div>
 
     <div class="section" *ngIf="hasPassenger">
       <h3>Passenger details</h3>
-      <div class="grid-3">
+      <div class="grid-2">
         <div>
           <span class="field-label">Full name</span>
           <input
@@ -66,15 +75,9 @@
             placeholder="Passenger name"
             formControlName="passengerName"
           />
-        </div>
-        <div>
-          <span class="field-label">ID / Passport no.</span>
-          <input
-            class="input"
-            type="text"
-            placeholder="Document number"
-            formControlName="passengerIdNumber"
-          />
+          <div class="error-text" *ngIf="formSubmitted && form.get('passengerName')?.invalid">
+            Passenger name is required.
+          </div>
         </div>
         <div>
           <span class="field-label">Mobile (for SMS)</span>
@@ -83,6 +86,29 @@
             type="tel"
             placeholder="+974 5555 5555"
             formControlName="phoneNumber"
+          />
+          <div class="error-text" *ngIf="formSubmitted && form.get('phoneNumber')?.invalid">
+            Mobile number is required.
+          </div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <span class="field-label">ID number</span>
+          <input
+            class="input"
+            type="text"
+            placeholder="National ID / document number"
+            formControlName="passengerIdNumber"
+          />
+        </div>
+        <div>
+          <span class="field-label">Passport number</span>
+          <input
+            class="input"
+            type="text"
+            placeholder="Passport no."
+            formControlName="passportNumber"
           />
         </div>
       </div>
@@ -200,4 +226,13 @@
       </button>
     </div>
   </form>
+  <div class="submit-messages">
+    <p class="submit-message submit-error" *ngIf="submitError">{{ submitError }}</p>
+    <p class="submit-message submit-success" *ngIf="submitSuccess">Booking submitted successfully.</p>
+  </div>
+
+  <div *ngIf="lastBooking" class="print-after-submit">
+    <h3 class="print-title-inline">Print documents for this booking</h3>
+    <app-booking-summary [booking]="lastBooking"></app-booking-summary>
+  </div>
 </div>

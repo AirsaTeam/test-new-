@@ -9,7 +9,7 @@
 چرا camelCase؟ چون فرانت Angular با originPort و departureDate کار می‌کند؛ پس API هم همین نام‌ها را برمی‌گرداند.
 """
 from rest_framework import serializers
-from .models import Booking
+from .models import Booking, Port, Carrier
 
 
 def _model_to_dict(booking):
@@ -29,6 +29,7 @@ def _model_to_dict(booking):
         'hasVehicle': booking.has_vehicle,
         'passengerName': booking.passenger_name or None,
         'passengerIdNumber': booking.passenger_id_number or None,
+        'passportNumber': booking.passport_number or None,
         'phoneNumber': booking.phone_number or None,
         'baggagePieces': booking.baggage_pieces,
         'baggageWeightKg': float(booking.baggage_weight_kg) if booking.baggage_weight_kg is not None else None,
@@ -71,6 +72,7 @@ class BookingSerializer(serializers.Serializer):
     # مسافر
     passengerName = serializers.CharField(required=False, allow_blank=True, default='')
     passengerIdNumber = serializers.CharField(required=False, allow_blank=True, default='')
+    passportNumber = serializers.CharField(required=False, allow_blank=True, default='')
     phoneNumber = serializers.CharField(required=False, allow_blank=True, default='')
 
     # بار و وسیله
@@ -124,3 +126,17 @@ class BookingSerializer(serializers.Serializer):
         if user and not user.is_authenticated:
             user = None
         return booking_service.create_booking(validated_data, user=user)
+
+
+class PortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Port
+        fields = ['id', 'code', 'name', 'created_at']
+        read_only_fields = ['created_at']
+
+
+class CarrierSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Carrier
+        fields = ['id', 'code', 'name', 'created_at']
+        read_only_fields = ['created_at']

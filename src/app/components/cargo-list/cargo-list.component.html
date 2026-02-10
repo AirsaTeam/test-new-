@@ -1,7 +1,7 @@
 <div class="cargo-list-page">
-  <h2 class="page-title">Passengers & submitted cargo</h2>
+  <h2 class="page-title no-print">Passengers & submitted cargo</h2>
   <div class="cargo-layout">
-    <div class="list-panel">
+    <div class="list-panel no-print">
       <p class="hint" *ngIf="(bookings$ | async)?.length === 0">No submissions yet. Use Registration to add a booking.</p>
       <ul class="cargo-list">
         <li

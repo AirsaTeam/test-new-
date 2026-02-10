@@ -42,6 +42,7 @@ export interface BookingRequest {
 
   passengerName?: string;
   passengerIdNumber?: string;
+  passportNumber?: string;
   phoneNumber?: string;
 
   /** Legacy: total pieces (derived from baggageItems) */

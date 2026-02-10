@@ -294,3 +294,36 @@
   background: rgba(71, 85, 105, 0.2);
   color: #e2e8f0;
 }
+
+.error-text {
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  color: #f87171;
+}
+
+.submit-messages {
+  margin: 0.5rem 1rem 0.25rem;
+}
+
+.submit-message {
+  font-size: 0.85rem;
+  margin: 0.15rem 0;
+}
+
+.submit-error {
+  color: #f87171;
+}
+
+.submit-success {
+  color: #4ade80;
+}
+
+.print-after-submit {
+  margin: 0.5rem 0 0.25rem;
+}
+
+.print-title-inline {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  color: #e2e8f0;
+}
