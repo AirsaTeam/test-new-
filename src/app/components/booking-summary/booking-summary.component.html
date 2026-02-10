@@ -3,7 +3,7 @@
   <div class="print-section boarding-pass no-print" *ngIf="booking.hasPassenger">
     <div class="boarding-pass-front">
       <header class="print-header">
-        <img src="/logo-shinas.png" alt="Shinas Port" class="print-logo print-logo-shinas" />
+        <img src="/logo-shinass.png" alt="Shinas Port" class="print-logo print-logo-shinas" />
         <img src="/logo-wml.png" alt="World Modern Lights LLC" class="print-logo print-logo-wml" />
         <h1 class="print-title">Boarding Pass</h1>
       </header>
@@ -44,7 +44,7 @@
     <div class="print-back">
       <p class="print-back-title">Shinas Port International Terminal</p>
       <div class="print-back-logos">
-        <img src="/logo-shinas.png" alt="Shinas Port" class="print-back-logo" />
+        <img src="/logo-shinass.png" alt="Shinas Port" class="print-back-logo" />
         <img src="/logo-wml.png" alt="World Modern Lights LLC" class="print-back-logo" />
       </div>
     </div>
@@ -54,7 +54,7 @@
   <div class="print-section passenger-ticket" *ngIf="booking.hasPassenger">
     <div class="ticket-card-front">
       <header class="print-header">
-        <img src="/logo-shinas.png" alt="Shinas Port" class="print-logo print-logo-shinas" />
+        <img src="/logo-shinass.png" alt="Shinas Port" class="print-logo print-logo-shinas" />
         <img src="/logo-wml.png" alt="World Modern Lights LLC" class="print-logo print-logo-wml" />
         <h1 class="print-title">Passenger Ticket</h1>
       </header>
@@ -75,7 +75,7 @@
   <div *ngFor="let item of baggagePiecesWithType; let i = index" class="print-section baggage-label-wrap no-print">
     <div class="baggage-label-front" [class.cabin-label]="isCabinBaggage(item)">
       <header class="print-header compact">
-        <img src="/logo-shinas.png" alt="Shinas Port" class="print-logo small" />
+        <img src="/logo-shinass.png" alt="Shinas Port" class="print-logo small" />
         <span class="print-label-heading">{{ isCabinBaggage(item) ? 'CABIN BAGGAGE (MAX 7KG)' : 'BAGGAGE LABEL ' + (i + 1) }}</span>
       </header>
       <section class="label-body">
@@ -97,7 +97,7 @@
   <div *ngFor="let veh of allVehicles; let i = index" class="print-section vehicle-label-wrap no-print">
     <div class="vehicle-label-front">
       <header class="print-header">
-        <img src="/logo-shinas.png" alt="Shinas Port" class="print-logo print-logo-shinas" />
+        <img src="/logo-shinass.png" alt="Shinas Port" class="print-logo print-logo-shinas" />
         <h1 class="print-title">Vehicle Shipping Label {{ i + 1 }}</h1>
       </header>
       <section class="label-body">
@@ -122,7 +122,7 @@
   <div class="print-section paper-receipt no-print">
     <div class="receipt-front">
       <header class="print-header compact">
-        <img src="/logo-shinas.png" alt="Shinas Port" class="print-logo small" />
+        <img src="/logo-shinass.png" alt="Shinas Port" class="print-logo small" />
         <img src="/logo-wml.png" alt="World Modern Lights LLC" class="print-logo small" />
         <h2 class="print-title small">Registration Receipt</h2>
       </header>
