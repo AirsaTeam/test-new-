@@ -40,6 +40,7 @@ class Booking(models.Model):
     # --- اطلاعات مسافر
     passenger_name = models.CharField(max_length=255, blank=True)
     passenger_id_number = models.CharField(max_length=64, blank=True)
+    passport_number = models.CharField(max_length=64, blank=True, help_text='شماره پاسپورت مسافر')
     phone_number = models.CharField(max_length=32, blank=True)
 
     # --- خلاصهٔ بار (تعداد قطعات و وزن کل — برای گزارش و نمایش)
@@ -98,3 +99,33 @@ class Booking(models.Model):
 
     def __str__(self):
         return f'{self.reference} ({self.origin_port} → {self.destination_port})'
+
+
+class Port(models.Model):
+    """بندر (مبدا/مقصد)"""
+    code = models.CharField(max_length=32, unique=True, help_text='کد بندر مثلاً DOHA, DUBAI')
+    name = models.CharField(max_length=128)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['code']
+        verbose_name = 'بندر'
+        verbose_name_plural = 'بنادر'
+
+    def __str__(self):
+        return f'{self.code} - {self.name}'
+
+
+class Carrier(models.Model):
+    """شرکت کشتیرانی / حمل‌ونقل"""
+    code = models.CharField(max_length=32, unique=True)
+    name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['code']
+        verbose_name = 'شرکت حمل'
+        verbose_name_plural = 'شرکت‌های حمل'
+
+    def __str__(self):
+        return f'{self.code} - {self.name}'

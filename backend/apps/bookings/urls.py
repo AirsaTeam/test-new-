@@ -10,5 +10,7 @@ from . import views
 
 urlpatterns = [
     path('', views.BookingListCreateView.as_view()),
+    path('search/', views.BookingSearchView.as_view()),
+    path('<str:reference>/receipt/pdf/', views.BookingReceiptPdfView.as_view()),
     path('<str:reference>/', views.BookingDetailView.as_view()),
 ]

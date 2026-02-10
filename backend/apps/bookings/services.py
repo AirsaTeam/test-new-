@@ -43,6 +43,7 @@ def _camel_to_model_data(data):
         'has_vehicle': data.get('hasVehicle', False),
         'passenger_name': (data.get('passengerName') or '').strip() or '',
         'passenger_id_number': (data.get('passengerIdNumber') or '').strip() or '',
+        'passport_number': (data.get('passportNumber') or '').strip() or '',
         'phone_number': (data.get('phoneNumber') or '').strip() or '',
         'baggage_pieces': data.get('baggagePieces'),
         'baggage_weight_kg': data.get('baggageWeightKg'),

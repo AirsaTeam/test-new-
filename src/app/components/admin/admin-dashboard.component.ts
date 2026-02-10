@@ -21,4 +21,8 @@ export class AdminDashboardComponent {
   goToReports(): void {
     this.router.navigate(['/admin/reports']);
   }
+
+  goToSearch(): void {
+    this.router.navigate(['/admin/search']);
+  }
 }
